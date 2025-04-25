@@ -1,7 +1,7 @@
-const VegetableItem = ({vegetableItem, onDeleteVegetable, onCheckVegetable, onHandleShowEditScreen, onGetVegetableItem}) => {
+const VegetableItem = ({vegetableItem, onDeleteVegetable, onCheckVegetable, onHandleShowEditScreen, onGetVegetableItemId}) => {
 
     const handleEdit = (currentId) => {
-        onGetVegetableItem(currentId)
+        onGetVegetableItemId(currentId)
         onHandleShowEditScreen()
     }
       

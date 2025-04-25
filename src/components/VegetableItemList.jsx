@@ -1,7 +1,7 @@
 //import { useState } from "react";
 import VegetableItem from "./VegetableItem.jsx";
 
-const VegetableItemList = ({vegetableItems, onDeleteVegetable, onCheckVegetable, onHandleShowEditScreen, onGetVegetableItem }) => {
+const VegetableItemList = ({vegetableItems, onDeleteVegetable, onCheckVegetable, onHandleShowEditScreen, onGetVegetableItemId }) => {
     return (
         <ul>
         {Object.values(vegetableItems).map((vegetableItem) => (
@@ -10,7 +10,7 @@ const VegetableItemList = ({vegetableItems, onDeleteVegetable, onCheckVegetable,
             onDeleteVegetable={onDeleteVegetable}
             onCheckVegetable={onCheckVegetable}
             onHandleShowEditScreen={onHandleShowEditScreen}
-            onGetVegetableItem={onGetVegetableItem}
+            onGetVegetableItemId={onGetVegetableItemId}
             key={vegetableItem.id}
           />
       ))}

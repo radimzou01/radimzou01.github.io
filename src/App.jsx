@@ -8,6 +8,7 @@ import "./App.css";
 let idNumber = 0
 const App = () => {
   const [vegetableItems, setVegetableItems] = useState({});
+  const [processedVegetableId, setProcessedVegetableId ] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -35,6 +36,7 @@ const App = () => {
             }
           }
     );
+    handleShowEditScreen()
   };
   
   const checkVegetable = (itemId) => {
@@ -65,11 +67,12 @@ const App = () => {
     setIsEditing(!isEditing)
   }
 
-  const getVegetableItem = (currentId) => {
-    return vegetableItems[currentId]
+  const getVegetableItemId = (currentId) => {
+    setProcessedVegetableId(currentId)
   }
 
-
+  const processedVegetableItem = vegetableItems[processedVegetableId]
+  
   const mainPageContent = () => {
     return (
       <>
@@ -79,7 +82,7 @@ const App = () => {
           onDeleteVegetable={deleteVegetable}
           onCheckVegetable={checkVegetable}
           onHandleShowEditScreen={handleShowEditScreen}
-          onGetVegetableItem={getVegetableItem}
+          onGetVegetableItemId={getVegetableItemId}
         />
       </>
     )
@@ -90,7 +93,7 @@ const App = () => {
       <h1>Plantery space</h1>
       { isCreating
         ? (<AddVegetableScreen onAddVegetable={addVegetable} />)
-        : ( isEditing ? (<EditVegetableScreen onEditVegetableName={editVegetableName} vegetableItem={/*object from getVegetableItem*/}/>) : (mainPageContent()))}
+        : ( isEditing ? (<EditVegetableScreen onEditVegetableName={editVegetableName} vegetableItem={processedVegetableItem}/>) : (mainPageContent()))}
     </>
   );
 };
