@@ -5,7 +5,7 @@ const EditCropScreen = ({ onEditCropName, crop}) => {
  
     return (
       <>
-        <h3>Edit vegetable</h3>
+        <h3>Edit crop</h3>
         <input
             type="text"
             value={itemName}

@@ -1,7 +1,7 @@
 const AddCropButton = ({...props}) => {
 
     return (
-        <button {...props}>Add vegetable</button>
+        <button {...props}>Add crop</button>
     )
 }
 

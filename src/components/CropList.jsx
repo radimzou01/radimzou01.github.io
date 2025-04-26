@@ -1,16 +1,16 @@
 import Crop from "./Crop.jsx";
 
-const CropList = ({gardenItems, onDeleteCrop, onCheckCrop, onHandleShowEditScreen, onGetCropId }) => {
+const CropList = ({crops, onDeleteCrop, onCheckCrop, onHandleShowEditScreen, onGetCropId }) => {
     return (
         <ul>
-        {Object.values(gardenItems).map((gardenItem) => (
+        {Object.values(crops).map((crop) => (
           <Crop 
-          gardenItem={gardenItem}
+          crop={crop}
           onDeleteCrop={onDeleteCrop}
           onCheckCrop={onCheckCrop}
             onHandleShowEditScreen={onHandleShowEditScreen}
             onGetCropId={onGetCropId}
-            key={gardenItem.id}
+            key={crop.id}
           />
       ))}
         </ul>

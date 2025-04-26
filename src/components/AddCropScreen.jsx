@@ -1,24 +1,24 @@
 import { useState } from "react";
 
-const AddCropScreen = ({ onAddGardenItem}) => {
-    const [vegetableName, setVegetableName] = useState("");
+const AddCropScreen = ({ onAddCrop}) => {
+    const [cropName, setCropName] = useState("");
 
-    const handleAddGardenItem = (itemName) => {
-      onAddGardenItem(itemName)
-      setVegetableName("");
+    const handleAddCrop = (itemName) => {
+      onAddCrop(itemName)
+      setCropName("");
     }
   
     return (
       <>
-        <h3>Add vegetable</h3>
+        <h3>Add crop</h3>
         <input 
           type="text"
-          value={vegetableName}
+          value={cropName}
           onChange={(e) => {
-            setVegetableName(e.target.value);
+            setCropName(e.target.value);
           }}
         />
-        <button onClick={() => handleAddGardenItem(vegetableName)}>Add</button>
+        <button onClick={() => handleAddCrop(cropName)}>Add</button>
       </>
     )
 }

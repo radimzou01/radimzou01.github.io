@@ -12,7 +12,7 @@ const App = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const addGardenItem = (itemName) => {
+  const addCrop = (itemName) => {
     idNumber++
     setCrops({
       ...crops,
@@ -71,12 +71,12 @@ const App = () => {
 
   const processedCrop = crops[processedCropId]
   
-  const gardenTable = () => {
+  const cropTable = () => {
     return (
       <>
         <AddCropButton onClick={handleShowAddScreen}/>
         <CropList
-          gardenItems={crops}
+          crops={crops}
           onDeleteCrop={deleteCrop}
           onCheckCrop={checkCrop}
           onHandleShowEditScreen={handleShowEditScreen}
@@ -88,11 +88,11 @@ const App = () => {
 
   const cropCrud = () => {
     if (isCreating) {
-      return (<AddCropScreen onAddGardenItem={addGardenItem} />)
+      return (<AddCropScreen onAddCrop={addCrop} />)
     } else if (isEditing) {
       return (<EditCropScreen onEditCropName={editCropName} crop={processedCrop}/>)
     } else {
-      return (gardenTable())
+      return (cropTable())
     }
   }
 
