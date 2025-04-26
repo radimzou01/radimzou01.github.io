@@ -1,15 +1,16 @@
 import { useState } from "react";
 
-const AddVegetableInput = ({ onAddVegetable}) => {
+const AddCropScreen = ({ onAddGardenItem}) => {
     const [vegetableName, setVegetableName] = useState("");
 
-    const handleAddVegetable = (itemName) => {
-      onAddVegetable(itemName)
+    const handleAddGardenItem = (itemName) => {
+      onAddGardenItem(itemName)
       setVegetableName("");
     }
   
     return (
       <>
+        <h3>Add vegetable</h3>
         <input 
           type="text"
           value={vegetableName}
@@ -17,9 +18,9 @@ const AddVegetableInput = ({ onAddVegetable}) => {
             setVegetableName(e.target.value);
           }}
         />
-        <button onClick={() => handleAddVegetable(vegetableName)}>Add</button>
+        <button onClick={() => handleAddGardenItem(vegetableName)}>Add</button>
       </>
     )
 }
 
-export default AddVegetableInput
+export default AddCropScreen

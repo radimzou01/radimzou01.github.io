@@ -1,21 +1,21 @@
 import { useState } from "react";
-import AddVegetableScreen from "./components/AddVegetableScreen.jsx";
-import EditVegetableScreen from "./components/EditVegetableScreen.jsx";
-import VegetableItemList from "./components/VegetableItemList.jsx";
-import AddVegetableButton from "./components/AddVegetableButton.jsx";
+import AddCropScreen from "./components/AddCropScreen.jsx";
+import EditCropScreen from "./components/EditCropScreen.jsx";
+import CropList from "./components/CropList.jsx";
+import AddCropButton from "./components/AddCropButton.jsx";
 import "./App.css";
 
 let idNumber = 0
 const App = () => {
-  const [vegetableItems, setVegetableItems] = useState({});
-  const [processedVegetableId, setProcessedVegetableId ] = useState(undefined)
+  const [crops, setCrops] = useState({});
+  const [processedCropId, setProcessedCropId ] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const addVegetable = (itemName) => {
+  const addGardenItem = (itemName) => {
     idNumber++
-    setVegetableItems({
-      ...vegetableItems,
+    setCrops({
+      ...crops,
       [idNumber]: {
         id: idNumber,
         name: itemName,
@@ -26,37 +26,35 @@ const App = () => {
   handleShowAddScreen()
   };
 
-  const editVegetableName = (idNumber, vegetableItemName) => {
-    setVegetableItems(
+  const editCropName = (idNumber, cropName) => {
+    setCrops(
            {
-            ...vegetableItems,
+            ...crops,
             [idNumber]: {
-              ...vegetableItems[idNumber],
-              name: vegetableItemName
+              ...crops[idNumber],
+              name: cropName
             }
           }
     );
     handleShowEditScreen()
   };
   
-  const checkVegetable = (itemId) => {
-    setVegetableItems({
-      ...vegetableItems,
+  const checkCrop = (itemId) => {
+    setCrops({
+      ...crops,
         [itemId]: {
-          ...vegetableItems[itemId],
-          isPlanted: !vegetableItems[itemId].isPlanted,
+          ...crops[itemId],
+          isPlanted: !crops[itemId].isPlanted,
         },
       },
     );
   };
 
-  const deleteVegetable = (deletedVegetableId) => {
-    const tempItems = {...vegetableItems}
-    delete tempItems[deletedVegetableId]
+  const deleteCrop = (deletedCropId) => {
+    const tempItems = {...crops}
+    delete tempItems[deletedCropId]
 
-    setVegetableItems(
-      tempItems
-    )
+    setCrops(tempItems)
   };
 
   const handleShowAddScreen = () => {
@@ -67,33 +65,41 @@ const App = () => {
     setIsEditing(!isEditing)
   }
 
-  const getVegetableItemId = (currentId) => {
-    setProcessedVegetableId(currentId)
+  const getCropId = (currentId) => {
+    setProcessedCropId(currentId)
   }
 
-  const processedVegetableItem = vegetableItems[processedVegetableId]
+  const processedCrop = crops[processedCropId]
   
-  const mainPageContent = () => {
+  const gardenTable = () => {
     return (
       <>
-        <AddVegetableButton onClick={handleShowAddScreen}/>
-        <VegetableItemList
-          vegetableItems={vegetableItems}
-          onDeleteVegetable={deleteVegetable}
-          onCheckVegetable={checkVegetable}
+        <AddCropButton onClick={handleShowAddScreen}/>
+        <CropList
+          gardenItems={crops}
+          onDeleteCrop={deleteCrop}
+          onCheckCrop={checkCrop}
           onHandleShowEditScreen={handleShowEditScreen}
-          onGetVegetableItemId={getVegetableItemId}
+          onGetCropId={getCropId}
         />
       </>
     )
   }
 
+  const cropCrud = () => {
+    if (isCreating) {
+      return (<AddCropScreen onAddGardenItem={addGardenItem} />)
+    } else if (isEditing) {
+      return (<EditCropScreen onEditCropName={editCropName} crop={processedCrop}/>)
+    } else {
+      return (gardenTable())
+    }
+  }
+
   return (
     <>
       <h1>Plantery space</h1>
-      { isCreating
-        ? (<AddVegetableScreen onAddVegetable={addVegetable} />)
-        : ( isEditing ? (<EditVegetableScreen onEditVegetableName={editVegetableName} vegetableItem={processedVegetableItem}/>) : (mainPageContent()))}
+      {cropCrud()}
     </>
   );
 };
@@ -121,3 +127,14 @@ export default App;
 // localStorage
 
 // CSS flexbox
+
+// ===== 25.4.
+// přejmenovat
+// přidat propsy
+// localStorage
+// Typescript
+// další propsy pro item ... changes přidat spreadem
+// XX - ternary dlouhy nepoužívat .. .dat spiše do contentu. Ternary se používá pouze pro krátké zápisy a na první pohled jasné
+// form náležitosti
+// checkVegetable dát do editu
+// přepsat handleEdit naming
