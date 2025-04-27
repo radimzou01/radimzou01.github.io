@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const EditCropScreen = ({ onEditCropName, crop}) => {
+const EditCropScreen = ({ onEditCrop, crop}) => {
     const [itemName, setItemName] = useState(crop.name)
  
     return (
@@ -12,7 +12,7 @@ const EditCropScreen = ({ onEditCropName, crop}) => {
             onChange={(e) => {setItemName(e.target.value)
         }}
         />
-        <button onClick={() => onEditCropName(crop.id, itemName)}>Save</button>
+        <button onClick={() => onEditCrop(crop.id, {name: itemName})}>Save</button>
       </>
     )
 }

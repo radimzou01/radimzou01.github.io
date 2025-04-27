@@ -8,7 +8,7 @@ import "./App.css";
 let idNumber = 0
 const App = () => {
   const [crops, setCrops] = useState({});
-  const [processedCropId, setProcessedCropId ] = useState(undefined)
+  const [processedCropId, setProcessedCropId] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -26,30 +26,21 @@ const App = () => {
   handleShowAddScreen()
   };
 
-  const editCropName = (idNumber, cropName) => {
+  const editCrop = (idNumber, changes) => {
     setCrops(
            {
             ...crops,
             [idNumber]: {
               ...crops[idNumber],
-              name: cropName
+              ...changes
             }
           }
     );
-    handleShowEditScreen()
+    if (!changes.hasOwnProperty('isPlanted')) {
+      handleShowEditScreen()
+    }
   };
   
-  const checkCrop = (itemId) => {
-    setCrops({
-      ...crops,
-        [itemId]: {
-          ...crops[itemId],
-          isPlanted: !crops[itemId].isPlanted,
-        },
-      },
-    );
-  };
-
   const deleteCrop = (deletedCropId) => {
     const tempItems = {...crops}
     delete tempItems[deletedCropId]
@@ -78,7 +69,7 @@ const App = () => {
         <CropList
           crops={crops}
           onDeleteCrop={deleteCrop}
-          onCheckCrop={checkCrop}
+          onEditCrop={editCrop}
           onHandleShowEditScreen={handleShowEditScreen}
           onGetCropId={getCropId}
         />
@@ -90,7 +81,7 @@ const App = () => {
     if (isCreating) {
       return (<AddCropScreen onAddCrop={addCrop} />)
     } else if (isEditing) {
-      return (<EditCropScreen onEditCropName={editCropName} crop={processedCrop}/>)
+      return (<EditCropScreen onEditCrop={editCrop} crop={processedCrop}/>)
     } else {
       return (cropTable())
     }
@@ -106,30 +97,15 @@ const App = () => {
 
 export default App;
 
-// spread operator na funkci
-// pořadí spreadu a itemu v objektu ... nejdřív původní a pak, co přepisuji
-
-// opravit ssh config
-// opravit bugy
-// přepsat zápis
-// udělat komponenty
 // nechat CSS
 // typescript
-// editační rozhraní, které překreslí tabulku ... na základě isEditing
-
-// map je drahá operace ... radši používat dictionary
 
 // ===== 16.4.
 
-// napojit fork na jiný repo
-// opravit bugy, vyčistit, přejmenovat
-// CRUD layouty
 // localStorage
-
 // CSS flexbox
 
 // ===== 25.4.
-// přejmenovat
 // přidat propsy
 // localStorage
 // Typescript
