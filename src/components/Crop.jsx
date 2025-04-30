@@ -1,12 +1,8 @@
-const Crop = ({crop, onDeleteCrop, onEditCrop, onHandleShowEditScreen, onGetCropId}) => {
+const Crop = ({crop, onDeleteCrop, onHandleShowEditScreen, onGetCropId}) => {
 
     const handleEditCrop = (currentId) => {
         onGetCropId(currentId)
         onHandleShowEditScreen()
-    }
-
-    const handleIsPlanted = (currentId) => {
-        onEditCrop(currentId, {isPlanted: !crop.isPlanted})
     }
 
     return (
@@ -14,9 +10,11 @@ const Crop = ({crop, onDeleteCrop, onEditCrop, onHandleShowEditScreen, onGetCrop
             <input
                 type="checkbox"
                 checked={crop.isPlanted}
-                onChange={() => handleIsPlanted(crop.id)}
+                disabled
             />
             <div>{crop.name}</div>
+            <div>{crop.seedDate}</div>
+            <div>{crop.harvestDate}</div>
             <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
             <button onClick={() => onDeleteCrop(crop.id)}>Delete</button>
         </li>

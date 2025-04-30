@@ -14,27 +14,29 @@ const App = () => {
 
   const addCrop = (itemName) => {
     idNumber++
+    const formattedDate = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })
+    // const currentDate = new Date()
     setCrops({
       ...crops,
       [idNumber]: {
         id: idNumber,
         name: itemName,
         isPlanted: true,
-      },
-    },
-  );
-  handleShowAddScreen()
+        seedDate: String(formattedDate),
+        harvestDate: String(formattedDate)
+      }})
+    handleShowAddScreen()
   };
 
   const editCrop = (idNumber, changes) => {
     setCrops(
-           {
-            ...crops,
-            [idNumber]: {
-              ...crops[idNumber],
-              ...changes
-            }
-          }
+      {
+        ...crops,
+        [idNumber]: {
+          ...crops[idNumber],
+          ...changes
+        }
+      }
     );
     if (!changes.hasOwnProperty('isPlanted')) {
       handleShowEditScreen()
@@ -97,20 +99,10 @@ const App = () => {
 
 export default App;
 
-// nechat CSS
-// typescript
-
-// ===== 16.4.
-
-// localStorage
-// CSS flexbox
-
 // ===== 25.4.
-// přidat propsy
+// Vyřešit datum
 // localStorage
 // Typescript
-// další propsy pro item ... changes přidat spreadem
-// XX - ternary dlouhy nepoužívat .. .dat spiše do contentu. Ternary se používá pouze pro krátké zápisy a na první pohled jasné
 // form náležitosti
-// checkVegetable dát do editu
-// přepsat handleEdit naming
+// CSS flexbox
+// tabulka
