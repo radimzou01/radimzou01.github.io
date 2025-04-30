@@ -1,62 +1,53 @@
 import { useState } from "react";
-import AddVegetableScreen from "./components/AddVegetableScreen.jsx";
-import EditVegetableScreen from "./components/EditVegetableScreen.jsx";
-import VegetableItemList from "./components/VegetableItemList.jsx";
-import AddVegetableButton from "./components/AddVegetableButton.jsx";
+import AddCropScreen from "./components/AddCropScreen.jsx";
+import EditCropScreen from "./components/EditCropScreen.jsx";
+import CropList from "./components/CropList.jsx";
+import AddCropButton from "./components/AddCropButton.jsx";
 import "./App.css";
 
 let idNumber = 0
 const App = () => {
-  const [vegetableItems, setVegetableItems] = useState({});
-  const [processedVegetableId, setProcessedVegetableId ] = useState(undefined)
+  const [crops, setCrops] = useState({});
+  const [processedCropId, setProcessedCropId] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const addVegetable = (itemName) => {
+  const addCrop = (itemName) => {
     idNumber++
-    setVegetableItems({
-      ...vegetableItems,
+    const formattedDate = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })
+    // const currentDate = new Date()
+    setCrops({
+      ...crops,
       [idNumber]: {
         id: idNumber,
         name: itemName,
         isPlanted: true,
-      },
-    },
-  );
-  handleShowAddScreen()
+        seedDate: String(formattedDate),
+        harvestDate: String(formattedDate)
+      }})
+    handleShowAddScreen()
   };
 
-  const editVegetableName = (idNumber, vegetableItemName) => {
-    setVegetableItems(
-           {
-            ...vegetableItems,
-            [idNumber]: {
-              ...vegetableItems[idNumber],
-              name: vegetableItemName
-            }
-          }
+  const editCrop = (idNumber, changes) => {
+    setCrops(
+      {
+        ...crops,
+        [idNumber]: {
+          ...crops[idNumber],
+          ...changes
+        }
+      }
     );
-    handleShowEditScreen()
+    if (!changes.hasOwnProperty('isPlanted')) {
+      handleShowEditScreen()
+    }
   };
   
-  const checkVegetable = (itemId) => {
-    setVegetableItems({
-      ...vegetableItems,
-        [itemId]: {
-          ...vegetableItems[itemId],
-          isPlanted: !vegetableItems[itemId].isPlanted,
-        },
-      },
-    );
-  };
+  const deleteCrop = (deletedCropId) => {
+    const tempItems = {...crops}
+    delete tempItems[deletedCropId]
 
-  const deleteVegetable = (deletedVegetableId) => {
-    const tempItems = {...vegetableItems}
-    delete tempItems[deletedVegetableId]
-
-    setVegetableItems(
-      tempItems
-    )
+    setCrops(tempItems)
   };
 
   const handleShowAddScreen = () => {
@@ -67,57 +58,51 @@ const App = () => {
     setIsEditing(!isEditing)
   }
 
-  const getVegetableItemId = (currentId) => {
-    setProcessedVegetableId(currentId)
+  const getCropId = (currentId) => {
+    setProcessedCropId(currentId)
   }
 
-  const processedVegetableItem = vegetableItems[processedVegetableId]
+  const processedCrop = crops[processedCropId]
   
-  const mainPageContent = () => {
+  const cropTable = () => {
     return (
       <>
-        <AddVegetableButton onClick={handleShowAddScreen}/>
-        <VegetableItemList
-          vegetableItems={vegetableItems}
-          onDeleteVegetable={deleteVegetable}
-          onCheckVegetable={checkVegetable}
+        <AddCropButton onClick={handleShowAddScreen}/>
+        <CropList
+          crops={crops}
+          onDeleteCrop={deleteCrop}
+          onEditCrop={editCrop}
           onHandleShowEditScreen={handleShowEditScreen}
-          onGetVegetableItemId={getVegetableItemId}
+          onGetCropId={getCropId}
         />
       </>
     )
   }
 
+  const cropCrud = () => {
+    if (isCreating) {
+      return (<AddCropScreen onAddCrop={addCrop} />)
+    } else if (isEditing) {
+      return (<EditCropScreen onEditCrop={editCrop} crop={processedCrop}/>)
+    } else {
+      return (cropTable())
+    }
+  }
+
   return (
     <>
       <h1>Plantery space</h1>
-      { isCreating
-        ? (<AddVegetableScreen onAddVegetable={addVegetable} />)
-        : ( isEditing ? (<EditVegetableScreen onEditVegetableName={editVegetableName} vegetableItem={processedVegetableItem}/>) : (mainPageContent()))}
+      {cropCrud()}
     </>
   );
 };
 
 export default App;
 
-// spread operator na funkci
-// pořadí spreadu a itemu v objektu ... nejdřív původní a pak, co přepisuji
-
-// opravit ssh config
-// opravit bugy
-// přepsat zápis
-// udělat komponenty
-// nechat CSS
-// typescript
-// editační rozhraní, které překreslí tabulku ... na základě isEditing
-
-// map je drahá operace ... radši používat dictionary
-
-// ===== 16.4.
-
-// napojit fork na jiný repo
-// opravit bugy, vyčistit, přejmenovat
-// CRUD layouty
+// ===== 25.4.
+// Vyřešit datum
 // localStorage
-
+// Typescript
+// form náležitosti
 // CSS flexbox
+// tabulka
