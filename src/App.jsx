@@ -1,31 +1,35 @@
 import { useState } from "react";
 import AddCropScreen from "./components/AddCropScreen.jsx";
 import EditCropScreen from "./components/EditCropScreen.jsx";
+import DeleteCropScreen from "./components/DeleteCropScreen.jsx";
 import CropList from "./components/CropList.jsx";
 import AddCropButton from "./components/AddCropButton.jsx";
+import dateToString from "./utils/dateToString.jsx";
 import "./App.css";
 
 let idNumber = 0
+const currentDate = new Date()
+
 const App = () => {
   const [crops, setCrops] = useState({});
   const [processedCropId, setProcessedCropId] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const addCrop = (itemName) => {
     idNumber++
-    const formattedDate = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })
-    // const currentDate = new Date()
+
     setCrops({
       ...crops,
       [idNumber]: {
         id: idNumber,
         name: itemName,
         isPlanted: true,
-        seedDate: String(formattedDate),
-        harvestDate: String(formattedDate)
+        seedDate: dateToString(currentDate),
+        harvestDate: dateToString(currentDate)
       }})
-    handleShowAddScreen()
+    handleShowAddScreen()  
   };
 
   const editCrop = (idNumber, changes) => {
@@ -38,9 +42,7 @@ const App = () => {
         }
       }
     );
-    if (!changes.hasOwnProperty('isPlanted')) {
-      handleShowEditScreen()
-    }
+    handleShowEditScreen()
   };
   
   const deleteCrop = (deletedCropId) => {
@@ -48,6 +50,7 @@ const App = () => {
     delete tempItems[deletedCropId]
 
     setCrops(tempItems)
+    handleShowDeleteScreen()
   };
 
   const handleShowAddScreen = () => {
@@ -56,6 +59,10 @@ const App = () => {
 
   const handleShowEditScreen = () => {
     setIsEditing(!isEditing)
+  }
+
+  const handleShowDeleteScreen = () => {
+    setIsDeleting(!isDeleting)
   }
 
   const getCropId = (currentId) => {
@@ -70,9 +77,8 @@ const App = () => {
         <AddCropButton onClick={handleShowAddScreen}/>
         <CropList
           crops={crops}
-          onDeleteCrop={deleteCrop}
-          onEditCrop={editCrop}
           onHandleShowEditScreen={handleShowEditScreen}
+          onHandleShowDeleteScreen={handleShowDeleteScreen}
           onGetCropId={getCropId}
         />
       </>
@@ -83,7 +89,9 @@ const App = () => {
     if (isCreating) {
       return (<AddCropScreen onAddCrop={addCrop} />)
     } else if (isEditing) {
-      return (<EditCropScreen onEditCrop={editCrop} crop={processedCrop}/>)
+      return (<EditCropScreen onEditCrop={editCrop} crop={processedCrop} onHandleShowEditScreen={handleShowEditScreen} />)
+    } else if (isDeleting) {
+      return (<DeleteCropScreen onDeleteCrop={deleteCrop} crop={processedCrop} onHandleShowDeleteScreen={handleShowDeleteScreen} />)
     } else {
       return (cropTable())
     }
@@ -100,9 +108,18 @@ const App = () => {
 export default App;
 
 // ===== 25.4.
-// Vyřešit datum
 // localStorage
 // Typescript
 // form náležitosti
 // CSS flexbox
 // tabulka
+
+// ----
+
+// moment - práce s datumem - odčítání, formátování datumu, času
+
+// ---
+// přidat select box - předvýběr typu plodiny
+// -- dle typu plodiny se přičte i předpokládaný datum sklizně
+
+
