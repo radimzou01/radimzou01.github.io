@@ -1,40 +1,76 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import dateToString from "../utils/dateToString";
 
-const EditCropScreen = ({ onEditCrop, crop}) => {
-    const [itemName, setItemName] = useState(crop.name)
-    const [cropSeedDate, setCropSeedDate] = useState(new Date(crop.seedDate))
+import "react-datepicker/dist/react-datepicker.css";
 
-    const handleIsPlanted = (currentId) => {
-      onEditCrop(currentId, {isPlanted: !crop.isPlanted})
+
+const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
+  const cropItemInit = {
+    id: crop.id,
+    name: crop.name,
+    isPlanted: crop.isPlanted,
+    seededAt: dateToString(crop.seededAt),
+    harvestedAt: dateToString(crop.harvestedAt)
   }
 
+  const [cropItem, setCropItem] = useState(cropItemInit)
 
-const handleDate = (date) => {
-  console.log(date);
-  setCropSeedDate(date)
-  onEditCrop(crop.id, {seedDate: cropSeedDate})
-  console.log(cropSeedDate);
-}
+  const handleName = (e) => {
+    setCropItem({
+      ...cropItem,
+      name: e.target.value
+    })
+  }
 
-    return (
+  const handleIsPlanted = () => {
+    setCropItem({
+        ...cropItem,
+        isPlanted: !cropItem.isPlanted
+      })
+  }
+
+  const handleSeedDate = (date) => {
+    setCropItem({
+      ...cropItem,
+      seededAt: dateToString(date)
+    })
+  }
+
+  const handleHarvestDate = (date) => {
+    setCropItem({
+      ...cropItem,
+      harvestedAt: dateToString(date)
+    })
+  }
+
+  return (
       <>
         <h3>Edit crop</h3>
         <input
           type="checkbox"
-          checked={crop.isPlanted}
-          onChange={() => handleIsPlanted(crop.id)}
+          checked={cropItem.isPlanted}
+          onChange={handleIsPlanted}
         />
         <input
           type="text"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
+          value={cropItem.name}
+          onChange={handleName}
         />
-        <input
+        <DatePicker
           type="date"
-          value={cropSeedDate}
-          onChange={(e) => handleDate(e)}
+          selected={cropItem.seededAt}
+          onChange={handleSeedDate}
+          dateFormat="d.M.yyyy"
         />
-        <button onClick={() => onEditCrop(crop.id, {name: itemName})}>Save</button>
+        <DatePicker
+          type="date"
+          selected={cropItem.harvestedAt}
+          onChange={handleHarvestDate}
+          dateFormat="d.M.yyyy"
+        />
+        <button onClick={() => onEditCrop(crop.id, cropItem)}>Save</button>
+        <button onClick={onHandleShowEditScreen}>Cancel</button>
       </>
     )
 }

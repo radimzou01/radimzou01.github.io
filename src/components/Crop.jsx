@@ -1,8 +1,15 @@
-const Crop = ({crop, onDeleteCrop, onHandleShowEditScreen, onGetCropId}) => {
+import formatDate from "../utils/formatDate";
+
+const Crop = ({crop, onHandleShowEditScreen, onHandleShowDeleteScreen, onGetCropId}) => {
 
     const handleEditCrop = (currentId) => {
         onGetCropId(currentId)
         onHandleShowEditScreen()
+    }
+
+    const handleDeleteCrop = (currentId) => {
+        onGetCropId(currentId)
+        onHandleShowDeleteScreen()
     }
 
     return (
@@ -13,10 +20,10 @@ const Crop = ({crop, onDeleteCrop, onHandleShowEditScreen, onGetCropId}) => {
                 disabled
             />
             <div>{crop.name}</div>
-            <div>{crop.seedDate}</div>
-            <div>{crop.harvestDate}</div>
+            <div>{formatDate(crop.seedDate)}</div>
+            <div>{formatDate(crop.harvestDate)}</div>
             <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
-            <button onClick={() => onDeleteCrop(crop.id)}>Delete</button>
+            <button onClick={() => handleDeleteCrop(crop.id)}>Delete</button>
         </li>
         )
     }
