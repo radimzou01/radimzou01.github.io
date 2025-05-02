@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-const AddCropScreen = ({ onAddCrop}) => {
+const AddCropScreen = ({ onAddCrop }) => {
     const [cropName, setCropName] = useState("");
 
     const handleAddCrop = (itemName) => {
       onAddCrop(itemName)
       setCropName("")
-      localStorage.setItem('crop', cropName)
     }
   
     return (
