@@ -5,7 +5,8 @@ const AddCropScreen = ({ onAddCrop}) => {
 
     const handleAddCrop = (itemName) => {
       onAddCrop(itemName)
-      setCropName("");
+      setCropName("")
+      localStorage.setItem('crop', cropName)
     }
   
     return (

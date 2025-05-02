@@ -10,8 +10,8 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
     id: crop.id,
     name: crop.name,
     isPlanted: crop.isPlanted,
-    seedDate: dateToString(crop.seedDate),
-    harvestDate: dateToString(crop.harvestDate)
+    seededAt: dateToString(crop.seededAt),
+    harvestedAt: dateToString(crop.harvestedAt)
   }
 
   const [cropItem, setCropItem] = useState(cropItemInit)
@@ -33,14 +33,14 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
   const handleSeedDate = (date) => {
     setCropItem({
       ...cropItem,
-      seedDate: dateToString(date)
+      seededAt: dateToString(date)
     })
   }
 
   const handleHarvestDate = (date) => {
     setCropItem({
       ...cropItem,
-      harvestDate: dateToString(date)
+      harvestedAt: dateToString(date)
     })
   }
 
@@ -59,13 +59,13 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
         />
         <DatePicker
           type="date"
-          selected={cropItem.seedDate}
+          selected={cropItem.seededAt}
           onChange={handleSeedDate}
           dateFormat="d.M.yyyy"
         />
         <DatePicker
           type="date"
-          selected={cropItem.harvestDate}
+          selected={cropItem.harvestedAt}
           onChange={handleHarvestDate}
           dateFormat="d.M.yyyy"
         />

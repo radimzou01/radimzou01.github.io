@@ -26,8 +26,8 @@ const App = () => {
         id: idNumber,
         name: itemName,
         isPlanted: true,
-        seedDate: dateToString(currentDate),
-        harvestDate: dateToString(currentDate)
+        seededAt: dateToString(currentDate),
+        harvestedAt: dateToString(currentDate)
       }})
     handleShowAddScreen()  
   };
