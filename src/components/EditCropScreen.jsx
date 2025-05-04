@@ -48,7 +48,6 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
       <>
         <h3>Edit crop</h3>
         <form onSubmit={() => onEditCrop(crop.id, cropItem)}>
-          <p>
             <label>
               Is crop planted?
               <input
@@ -57,8 +56,6 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
                 onChange={handleIsPlanted}
               />
             </label>
-          </p>
-          <p>
             <label>
               Crop name: 
               <input
@@ -67,8 +64,6 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
                 onChange={handleName}
               />
             </label>
-          </p>
-          <p>
             <label>
               Seed date:
               <DatePicker
@@ -78,8 +73,6 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
                 dateFormat="d.M.yyyy"
               />
             </label>
-          </p>
-          <p>
             <label>
               Harvest date:
               <DatePicker
@@ -89,7 +82,6 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
                 dateFormat="d.M.yyyy"
               />
             </label>
-          </p>
           <button type="submit">Save</button>
           <button onClick={onHandleShowEditScreen}>Cancel</button>
         </form>

@@ -1,24 +1,23 @@
 import Crop from "./Crop.jsx";
+import AddCropButton from "./AddCropButton.jsx"
 
-const cropsStringifyName = 'crops'
-
-const CropList = ({crops, onHandleShowEditScreen, onHandleShowDeleteScreen, onGetCropId }) => {
-
-  const storedCrops = JSON.parse(localStorage.getItem(cropsStringifyName)) || crops
-  localStorage.setItem(cropsStringifyName, JSON.stringify(crops))
+const CropList = ({crops, handleShowAddScreen, onHandleShowEditScreen, onHandleShowDeleteScreen, onGetCropId }) => {
 
     return (
+      <>
+        <AddCropButton onClick={handleShowAddScreen}/>
         <ul>
-        {Object.values(storedCrops).map((crop) => (
+        {Object.values(crops).map((crop) => (
           <Crop
-            crop={crop}
-            onHandleShowEditScreen={onHandleShowEditScreen}
-            onHandleShowDeleteScreen={onHandleShowDeleteScreen}
-            onGetCropId={onGetCropId}
-            key={crop.id}
+          crop={crop}
+          onHandleShowEditScreen={onHandleShowEditScreen}
+          onHandleShowDeleteScreen={onHandleShowDeleteScreen}
+          onGetCropId={onGetCropId}
+          key={crop.id}
           />
-      ))}
+        ))}
         </ul>
+      </>
     )
 }
 
