@@ -47,30 +47,52 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
   return (
       <>
         <h3>Edit crop</h3>
-        <input
-          type="checkbox"
-          checked={cropItem.isPlanted}
-          onChange={handleIsPlanted}
-        />
-        <input
-          type="text"
-          value={cropItem.name}
-          onChange={handleName}
-        />
-        <DatePicker
-          type="date"
-          selected={cropItem.seededAt}
-          onChange={handleSeedDate}
-          dateFormat="d.M.yyyy"
-        />
-        <DatePicker
-          type="date"
-          selected={cropItem.harvestedAt}
-          onChange={handleHarvestDate}
-          dateFormat="d.M.yyyy"
-        />
-        <button onClick={() => onEditCrop(crop.id, cropItem)}>Save</button>
-        <button onClick={onHandleShowEditScreen}>Cancel</button>
+        <form onSubmit={() => onEditCrop(crop.id, cropItem)}>
+          <p>
+            <label>
+              Is crop planted?
+              <input
+                type="checkbox"
+                checked={cropItem.isPlanted}
+                onChange={handleIsPlanted}
+              />
+            </label>
+          </p>
+          <p>
+            <label>
+              Crop name: 
+              <input
+                type="text"
+                value={cropItem.name}
+                onChange={handleName}
+              />
+            </label>
+          </p>
+          <p>
+            <label>
+              Seed date:
+              <DatePicker
+                type="date"
+                selected={cropItem.seededAt}
+                onChange={handleSeedDate}
+                dateFormat="d.M.yyyy"
+              />
+            </label>
+          </p>
+          <p>
+            <label>
+              Harvest date:
+              <DatePicker
+                type="date"
+                selected={cropItem.harvestedAt}
+                onChange={handleHarvestDate}
+                dateFormat="d.M.yyyy"
+              />
+            </label>
+          </p>
+          <button type="submit">Save</button>
+          <button onClick={onHandleShowEditScreen}>Cancel</button>
+        </form>
       </>
     )
 }

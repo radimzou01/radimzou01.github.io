@@ -108,9 +108,7 @@ const App = () => {
 export default App;
 
 // ===== 25.4.
-// localStorage
 // Typescript
-// form náležitosti
 // CSS flexbox
 // tabulka
 

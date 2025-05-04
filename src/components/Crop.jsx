@@ -20,8 +20,8 @@ const Crop = ({crop, onHandleShowEditScreen, onHandleShowDeleteScreen, onGetCrop
                 disabled
             />
             <div>{crop.name}</div>
-            <div>{formatDate(crop.seedDate)}</div>
-            <div>{formatDate(crop.harvestDate)}</div>
+            <div>{formatDate(crop.seededAt)}</div>
+            <div>{formatDate(crop.harvestedAt)}</div>
             <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
             <button onClick={() => handleDeleteCrop(crop.id)}>Delete</button>
         </li>
