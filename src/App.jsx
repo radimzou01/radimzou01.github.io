@@ -1,21 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddCropScreen from "./components/AddCropScreen.jsx";
 import EditCropScreen from "./components/EditCropScreen.jsx";
 import DeleteCropScreen from "./components/DeleteCropScreen.jsx";
-import CropList from "./components/CropList.jsx";
 import AddCropButton from "./components/AddCropButton.jsx";
+import EmptyScreen from "./components/EmptyScreen.jsx";
+import CropList from "./components/CropList.jsx";
 import dateToString from "./utils/dateToString.jsx";
 import "./App.css";
 
-let idNumber = 0
+const cropsStringifyName = 'crops'
 const currentDate = new Date()
+const storedCrops = JSON.parse(localStorage.getItem(cropsStringifyName))
+let idNumber = 0
 
 const App = () => {
-  const [crops, setCrops] = useState({});
+  const [crops, setCrops] = useState(storedCrops);
   const [processedCropId, setProcessedCropId] = useState(undefined)
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  localStorage.setItem(cropsStringifyName, JSON.stringify(crops))
 
   const addCrop = (itemName) => {
     idNumber++
@@ -70,21 +75,8 @@ const App = () => {
   }
 
   const processedCrop = crops[processedCropId]
+  const cropsTotalNumber = Object.keys(crops).length
   
-  const cropTable = () => {
-    return (
-      <>
-        <AddCropButton onClick={handleShowAddScreen}/>
-        <CropList
-          crops={crops}
-          onHandleShowEditScreen={handleShowEditScreen}
-          onHandleShowDeleteScreen={handleShowDeleteScreen}
-          onGetCropId={getCropId}
-        />
-      </>
-    )
-  }
-
   const cropCrud = () => {
     if (isCreating) {
       return (<AddCropScreen onAddCrop={addCrop} />)
@@ -92,8 +84,17 @@ const App = () => {
       return (<EditCropScreen onEditCrop={editCrop} crop={processedCrop} onHandleShowEditScreen={handleShowEditScreen} />)
     } else if (isDeleting) {
       return (<DeleteCropScreen onDeleteCrop={deleteCrop} crop={processedCrop} onHandleShowDeleteScreen={handleShowDeleteScreen} />)
+    } else if (cropsTotalNumber === 0) {
+      return (<EmptyScreen onHandleShowAddScreen={handleShowAddScreen}/>)
     } else {
-      return (cropTable())
+      return (
+        <CropList
+          crops={crops}
+          onHandleShowAddScreen={handleShowAddScreen}
+          onHandleShowEditScreen={handleShowEditScreen}
+          onHandleShowDeleteScreen={handleShowDeleteScreen}
+          onGetCropId={getCropId}
+        />)
     }
   }
 
@@ -108,11 +109,8 @@ const App = () => {
 export default App;
 
 // ===== 25.4.
-// localStorage
 // Typescript
-// form náležitosti
 // CSS flexbox
-// tabulka
 
 // ----
 
@@ -121,5 +119,8 @@ export default App;
 // ---
 // přidat select box - předvýběr typu plodiny
 // -- dle typu plodiny se přičte i předpokládaný datum sklizně
+// stahování počasí dle geolokace
+// jazykové mutace dle browseru
+// BE ?
 
 

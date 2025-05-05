@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 const AddCropScreen = ({ onAddCrop }) => {
     const [cropName, setCropName] = useState("");
 
@@ -11,14 +12,21 @@ const AddCropScreen = ({ onAddCrop }) => {
     return (
       <>
         <h3>Add crop</h3>
-        <input 
-          type="text"
-          value={cropName}
-          onChange={(e) => {
-            setCropName(e.target.value);
-          }}
-        />
-        <button onClick={() => handleAddCrop(cropName)}>Add</button>
+        <form onSubmit={() => handleAddCrop(cropName)}>
+          <p>
+            <label>Crop name:
+              <input
+                placeholder="spring carrot"
+                type="text"
+                value={cropName}
+                onChange={(e) => {
+                  setCropName(e.target.value);
+                }}
+              />
+            </label>
+          </p>
+          <button type="submit">Add</button>
+        </form>
       </>
     )
 }
