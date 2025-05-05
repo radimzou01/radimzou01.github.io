@@ -10,7 +10,7 @@ import "./App.css";
 
 const cropsStringifyName = 'crops'
 const currentDate = new Date()
-let storedCrops = {}
+const storedCrops = JSON.parse(localStorage.getItem(cropsStringifyName))
 let idNumber = 0
 
 const App = () => {
@@ -20,10 +20,7 @@ const App = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   
-  useEffect(() => {
-    storedCrops = JSON.parse(localStorage.getItem(cropsStringifyName))
-    localStorage.setItem(cropsStringifyName, JSON.stringify(crops))
-  }, [crops])
+  localStorage.setItem(cropsStringifyName, JSON.stringify(crops))
 
   const addCrop = (itemName) => {
     idNumber++
@@ -112,7 +109,6 @@ const App = () => {
 export default App;
 
 // ===== 25.4.
-// tabulka
 // Typescript
 // CSS flexbox
 

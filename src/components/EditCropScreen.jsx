@@ -48,40 +48,40 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen}) => {
       <>
         <h3>Edit crop</h3>
         <form onSubmit={() => onEditCrop(crop.id, cropItem)}>
-            <label>
-              Is crop planted?
-              <input
-                type="checkbox"
-                checked={cropItem.isPlanted}
-                onChange={handleIsPlanted}
-              />
-            </label>
-            <label>
-              Crop name: 
-              <input
-                type="text"
-                value={cropItem.name}
-                onChange={handleName}
-              />
-            </label>
-            <label>
-              Seed date:
-              <DatePicker
-                type="date"
-                selected={cropItem.seededAt}
-                onChange={handleSeedDate}
-                dateFormat="d.M.yyyy"
-              />
-            </label>
-            <label>
-              Harvest date:
-              <DatePicker
-                type="date"
-                selected={cropItem.harvestedAt}
-                onChange={handleHarvestDate}
-                dateFormat="d.M.yyyy"
-              />
-            </label>
+          <label>
+            Is crop planted?
+            <input
+              type="checkbox"
+              checked={cropItem.isPlanted}
+              onChange={handleIsPlanted}
+            />
+          </label>
+          <label>
+            Crop name: 
+            <input
+              type="text"
+              value={cropItem.name}
+              onChange={handleName}
+            />
+          </label>
+          <label>
+            Seed date:
+          </label>
+            <DatePicker
+              type="date"
+              selected={cropItem.seededAt}
+              onChange={handleSeedDate}
+              dateFormat="d.M.yyyy"
+            />
+          <label>
+            Harvest date:
+          </label>
+            <DatePicker
+              type="date"
+              selected={cropItem.harvestedAt}
+              onChange={handleHarvestDate}
+              dateFormat="d.M.yyyy"
+            />
           <button type="submit">Save</button>
           <button onClick={onHandleShowEditScreen}>Cancel</button>
         </form>

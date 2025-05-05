@@ -13,18 +13,26 @@ const Crop = ({crop, onHandleShowEditScreen, onHandleShowDeleteScreen, onGetCrop
     }
 
     return (
-        <li>
-            <input
-                type="checkbox"
-                checked={crop.isPlanted}
-                disabled
-            />
-            <div>{crop.name}</div>
-            <div>{formatDate(crop.seededAt)}</div>
-            <div>{formatDate(crop.harvestedAt)}</div>
-            <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
-            <button onClick={() => handleDeleteCrop(crop.id)}>Delete</button>
-        </li>
+        <>
+            <tr>
+                <th scope="row">
+                    <input
+                        type="checkbox"
+                        checked={crop.isPlanted}
+                        disabled
+                    />
+                </th>
+                <td>{crop.name}</td>
+                <td>{formatDate(crop.seededAt)}</td>
+                <td>{formatDate(crop.harvestedAt)}</td>
+                <td>
+                    <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
+                </td>
+                <td>
+                    <button onClick={() => handleDeleteCrop(crop.id)}>Delete</button>
+                </td>
+            </tr>
+        </>
         )
     }
 
