@@ -1,24 +1,36 @@
 import { useState } from "react";
+import { ChangeEvent } from "react";
 import DatePicker from "react-datepicker";
-import dateToString from "../utils/dateToString.tsx";
+import { Crop as CropType } from "../App";
+import { DatepickerType } from "../App";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen }) => {
-  const cropItemInit = {
+type Props = {
+  crop: CropType;
+  onEditCrop: (idNumber: number, changes: CropType) => void;
+  onHandleShowEditScreen: () => void;
+};
+
+const EditCropScreen = ({
+  onEditCrop,
+  crop,
+  onHandleShowEditScreen,
+}: Props) => {
+  const cropItemInit: CropType = {
     id: crop.id,
     name: crop.name,
     isPlanted: crop.isPlanted,
-    seededAt: dateToString(crop.seededAt),
-    harvestedAt: dateToString(crop.harvestedAt),
+    seededAt: crop.seededAt,
+    harvestedAt: crop.harvestedAt,
   };
 
   const [cropItem, setCropItem] = useState(cropItemInit);
 
-  const handleName = (e) => {
+  const handleName = (event: ChangeEvent<HTMLInputElement>) => {
     setCropItem({
       ...cropItem,
-      name: e.target.value,
+      name: event.target.value,
     });
   };
 
@@ -29,17 +41,17 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen }) => {
     });
   };
 
-  const handleSeedDate = (date: Date) => {
+  const handleSeedDate = (date: DatepickerType) => {
     setCropItem({
       ...cropItem,
-      seededAt: dateToString(date),
+      seededAt: date,
     });
   };
 
-  const handleHarvestDate = (date: Date) => {
+  const handleHarvestDate = (date: DatepickerType) => {
     setCropItem({
       ...cropItem,
-      harvestedAt: dateToString(date),
+      harvestedAt: date,
     });
   };
 
@@ -61,14 +73,12 @@ const EditCropScreen = ({ onEditCrop, crop, onHandleShowEditScreen }) => {
         </label>
         <label>Seed date:</label>
         <DatePicker
-          type="date"
           selected={cropItem.seededAt}
           onChange={handleSeedDate}
           dateFormat="d.M.yyyy"
         />
         <label>Harvest date:</label>
         <DatePicker
-          type="date"
           selected={cropItem.harvestedAt}
           onChange={handleHarvestDate}
           dateFormat="d.M.yyyy"

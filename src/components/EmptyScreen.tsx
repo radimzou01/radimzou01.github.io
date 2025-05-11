@@ -1,6 +1,10 @@
 import AddCropButton from "./AddCropButton.js";
 
-const EmptyScreen = ({ onHandleShowAddScreen }) => {
+type Props = {
+  onHandleShowAddScreen: () => void;
+};
+
+const EmptyScreen = ({ onHandleShowAddScreen }: Props) => {
   return (
     <>
       <AddCropButton onClick={onHandleShowAddScreen} />

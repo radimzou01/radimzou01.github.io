@@ -1,4 +1,5 @@
 import { Crop as CropType } from "../App";
+import formatDate from "../utils/formatDate";
 
 type Props = {
   crop: CropType;
@@ -30,8 +31,8 @@ const Crop = ({
           <input type="checkbox" checked={crop.isPlanted} disabled />
         </th>
         <td>{crop.name}</td>
-        <td>{crop.seededAt}</td>
-        <td>{crop.harvestedAt}</td>
+        <td>{formatDate(crop.seededAt)}</td>
+        <td>{formatDate(crop.harvestedAt)}</td>
         <td>
           <button onClick={() => handleEditCrop(crop.id)}>Edit</button>
         </td>
