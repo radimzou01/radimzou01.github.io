@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { buttonStyleId } from "../constants/cssId";
 
 type Props = {
   onAddCrop: (itemName: string) => void;
@@ -29,7 +30,9 @@ const AddCropScreen = ({ onAddCrop }: Props) => {
             />
           </label>
         </p>
-        <button type="submit">Add</button>
+        <button type="submit" id={`${buttonStyleId.primary}`}>
+          Add
+        </button>
       </form>
     </>
   );
