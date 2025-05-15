@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { ChangeEvent } from "react";
 import DatePicker from "react-datepicker";
-import { Crop as CropType } from "../App";
-import { DatepickerType } from "../App";
+import { CropType, DatepickerType } from "../types.ts";
 
 import "react-datepicker/dist/react-datepicker.css";
 

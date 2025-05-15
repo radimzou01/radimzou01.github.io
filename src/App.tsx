@@ -4,22 +4,9 @@ import EditCropScreen from "./components/EditCropScreen.js";
 import DeleteCropScreen from "./components/DeleteCropScreen.js";
 import EmptyScreen from "./components/EmptyScreen.js";
 import CropList from "./components/CropList.js";
+import { CropType, CropsType } from "./types.js";
 // import appStatus from "./constants/appStatus.js";
 import "./App.css";
-
-export type DatepickerType = Date | null;
-
-export type Crop = {
-  id: number;
-  name: string;
-  isPlanted: boolean;
-  seededAt: DatepickerType;
-  harvestedAt: DatepickerType;
-};
-
-export type Crops = {
-  [id: number]: Crop;
-};
 
 // type Status =
 //   | typeof appStatus.empty
@@ -30,13 +17,11 @@ export type Crops = {
 
 const cropsStringifyName = "crops";
 const currentDate: Date = new Date();
-const storedCrops: Crops = JSON.parse(
+const storedCrops: CropsType = JSON.parse(
   localStorage.getItem(cropsStringifyName) ?? "{}"
 );
 
-// const cropsTotalNumber: number = Object.keys(storedCrops).length ?? 0;
-
-// const setInitState = (): string => {
+// const getInitState = (cropsTotalNumber): string => {
 //   if (cropsTotalNumber === 0) {
 //     return appStatus.empty;
 //   } else {
@@ -51,9 +36,9 @@ let idNumber = 0;
 console.log("mounted");
 
 const App = () => {
-  const [crops, setCrops] = useState<Crops>(storedCrops);
+  const [crops, setCrops] = useState<CropsType>(storedCrops);
   const [processedCropId, setProcessedCropId] = useState<number>(0);
-  // const [status, setStatus] = useState<Status>(setInitState());
+  // const [status, setStatus] = useState<Status>(getInitState(crops));
 
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -86,7 +71,7 @@ const App = () => {
     handleShowAddScreen();
   };
 
-  const editCrop = (idNumber: number, changes: Crop) => {
+  const editCrop = (idNumber: number, changes: CropType) => {
     setCrops({
       ...crops,
       [idNumber]: {
@@ -225,3 +210,13 @@ export default App;
 // ----
 
 // status do switche a do jednoho statu
+
+// udělat file types.ts
+// status do enmumu
+
+// top wanted
+// flex direction
+// justify content
+// align items
+
+// grid

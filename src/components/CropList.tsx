@@ -1,6 +1,6 @@
 import Crop from "./Crop.tsx";
 import AddCropButton from "./AddCropButton.js";
-import { Crops as CropsType } from "../App";
+import { CropsType } from "../types.ts";
 
 type Props = {
   crops: CropsType;

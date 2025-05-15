@@ -1,4 +1,4 @@
-import { Crop as CropType } from "../App";
+import { CropType } from "../types.ts";
 
 type Props = {
   crop: CropType;
