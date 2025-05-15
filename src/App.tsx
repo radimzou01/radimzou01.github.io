@@ -4,56 +4,31 @@ import EditCropScreen from "./components/EditCropScreen.js";
 import DeleteCropScreen from "./components/DeleteCropScreen.js";
 import EmptyScreen from "./components/EmptyScreen.js";
 import CropList from "./components/CropList.js";
-import { CropType, CropsType } from "./types.js";
-// import appStatus from "./constants/appStatus.js";
+import { CropType, CropsType, Status } from "./types.js";
 import "./App.css";
 
-// type Status =
-//   | typeof appStatus.empty
-//   | typeof appStatus.creating
-//   | typeof appStatus.editing
-//   | typeof appStatus.deleting
-//   | typeof appStatus.inhabited;
-
+let idNumber = 0;
 const cropsStringifyName = "crops";
 const currentDate: Date = new Date();
 const storedCrops: CropsType = JSON.parse(
   localStorage.getItem(cropsStringifyName) ?? "{}"
 );
 
-// const getInitState = (cropsTotalNumber): string => {
-//   if (cropsTotalNumber === 0) {
-//     return appStatus.empty;
-//   } else {
-//     return appStatus.inhabited;
-//   }
-// };
-// console.log(cropsTotalNumber === 0);
-// console.log(cropsTotalNumber);
-// console.log(setInitState());
-
-let idNumber = 0;
-console.log("mounted");
+const getInitState = (cropsObject: CropsType): Status => {
+  const cropsTotalNumber: number = Object.keys(cropsObject).length ?? 0;
+  if (cropsTotalNumber > 0) {
+    return Status.Inhabited;
+  } else {
+    return Status.Empty;
+  }
+};
 
 const App = () => {
   const [crops, setCrops] = useState<CropsType>(storedCrops);
   const [processedCropId, setProcessedCropId] = useState<number>(0);
-  // const [status, setStatus] = useState<Status>(getInitState(crops));
-
-  const [isCreating, setIsCreating] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [status, setStatus] = useState<Status>(getInitState(crops));
 
   localStorage.setItem(cropsStringifyName, JSON.stringify(crops));
-  const cropsTotalNumber = Object.keys(crops).length;
-
-  // const handleTableScreen = () => {
-  //   if (cropsTotalNumber > 0) {
-  //     setStatus(appStatus.inhabited);
-  //   } else {
-  //     setStatus(appStatus.empty);
-  //   }
-  // };
 
   const addCrop = (itemName: string): void => {
     idNumber++;
@@ -68,7 +43,7 @@ const App = () => {
         harvestedAt: currentDate,
       },
     });
-    handleShowAddScreen();
+    handleShowInhabitedScreen();
   };
 
   const editCrop = (idNumber: number, changes: CropType) => {
@@ -79,7 +54,7 @@ const App = () => {
         ...changes,
       },
     });
-    handleShowEditScreen();
+    handleShowInhabitedScreen();
   };
 
   const deleteCrop = (deletedCropId: number) => {
@@ -87,23 +62,32 @@ const App = () => {
     delete tempItems[deletedCropId];
 
     setCrops(tempItems);
-    // handleTableScreen();
-    handleShowDeleteScreen();
+
+    if (Object.keys(crops).length === 1) {
+      handleShowEmptyScreen();
+    } else {
+      handleShowInhabitedScreen();
+    }
   };
 
   const handleShowAddScreen = () => {
-    // setStatus(appStatus.creating);
-    setIsCreating(!isCreating);
+    setStatus(Status.Creating);
   };
 
   const handleShowEditScreen = () => {
-    // setStatus(appStatus.editing);
-    setIsEditing(!isEditing);
+    setStatus(Status.Editing);
   };
 
   const handleShowDeleteScreen = () => {
-    // setStatus(appStatus.deleting);
-    setIsDeleting(!isDeleting);
+    setStatus(Status.Deleting);
+  };
+
+  const handleShowInhabitedScreen = () => {
+    setStatus(Status.Inhabited);
+  };
+
+  const handleShowEmptyScreen = () => {
+    setStatus(Status.Empty);
   };
 
   const getCropId = (currentId: number) => {
@@ -112,73 +96,38 @@ const App = () => {
 
   const processedCrop = crops[processedCropId];
 
-  // const cropCrud = () => {
-  //   switch (status) {
-  //     case appStatus.empty:
-  //       return <EmptyScreen onHandleShowAddScreen={handleShowAddScreen} />;
-  //     case appStatus.creating:
-  //       return <AddCropScreen onAddCrop={addCrop} />;
-  //     case appStatus.inhabited:
-  //       return (
-  //         <CropList
-  //           crops={crops}
-  //           onHandleShowAddScreen={handleShowAddScreen}
-  //           onHandleShowEditScreen={handleShowEditScreen}
-  //           onHandleShowDeleteScreen={handleShowDeleteScreen}
-  //           onGetCropId={getCropId}
-  //         />
-  //       );
-  //     case appStatus.editing:
-  //       return (
-  //         <EditCropScreen
-  //           onEditCrop={editCrop}
-  //           crop={processedCrop}
-  //           onHandleShowEditScreen={handleShowEditScreen}
-  //         />
-  //       );
-  //     case appStatus.deleting:
-  //       return (
-  //         <DeleteCropScreen
-  //           onDeleteCrop={deleteCrop}
-  //           crop={processedCrop}
-  //           onHandleShowDeleteScreen={handleShowDeleteScreen}
-  //           // onHandleTableScreen={handleTableScreen}
-  //         />
-  //       );
-  //   }
-  // };
-
   const cropCrud = () => {
-    if (isCreating) {
-      return <AddCropScreen onAddCrop={addCrop} />;
-    } else if (isEditing) {
-      return (
-        <EditCropScreen
-          onEditCrop={editCrop}
-          crop={processedCrop}
-          onHandleShowEditScreen={handleShowEditScreen}
-        />
-      );
-    } else if (isDeleting) {
-      return (
-        <DeleteCropScreen
-          onDeleteCrop={deleteCrop}
-          crop={processedCrop}
-          onHandleShowDeleteScreen={handleShowDeleteScreen}
-        />
-      );
-    } else if (cropsTotalNumber === 0) {
-      return <EmptyScreen onHandleShowAddScreen={handleShowAddScreen} />;
-    } else {
-      return (
-        <CropList
-          crops={crops}
-          onHandleShowAddScreen={handleShowAddScreen}
-          onHandleShowEditScreen={handleShowEditScreen}
-          onHandleShowDeleteScreen={handleShowDeleteScreen}
-          onGetCropId={getCropId}
-        />
-      );
+    switch (status) {
+      case Status.Empty:
+        return <EmptyScreen onHandleShowAddScreen={handleShowAddScreen} />;
+      case Status.Creating:
+        return <AddCropScreen onAddCrop={addCrop} />;
+      case Status.Inhabited:
+        return (
+          <CropList
+            crops={crops}
+            onHandleShowAddScreen={handleShowAddScreen}
+            onHandleShowEditScreen={handleShowEditScreen}
+            onHandleShowDeleteScreen={handleShowDeleteScreen}
+            onGetCropId={getCropId}
+          />
+        );
+      case Status.Editing:
+        return (
+          <EditCropScreen
+            onEditCrop={editCrop}
+            crop={processedCrop}
+            onHandleShowEditScreen={handleShowEditScreen}
+          />
+        );
+      case Status.Deleting:
+        return (
+          <DeleteCropScreen
+            onDeleteCrop={deleteCrop}
+            crop={processedCrop}
+            onHandleShowInhabitedScreen={handleShowInhabitedScreen}
+          />
+        );
     }
   };
 
@@ -208,11 +157,6 @@ export default App;
 // BE ?
 
 // ----
-
-// status do switche a do jednoho statu
-
-// udělat file types.ts
-// status do enmumu
 
 // top wanted
 // flex direction

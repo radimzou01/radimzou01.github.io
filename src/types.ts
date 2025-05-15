@@ -11,3 +11,11 @@ export type CropType = {
 export type CropsType = {
   [id: number]: CropType;
 };
+
+export enum Status {
+  Empty = "empty",
+  Creating = "creating",
+  Editing = "editing",
+  Deleting = "deleting",
+  Inhabited = "inhabited",
+}
