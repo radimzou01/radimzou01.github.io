@@ -1,6 +1,6 @@
 import { CropType } from "../types.ts";
 import formatDate from "../utils/formatDate";
-import { buttonStyleId } from "../constants/cssId";
+import Button from "./Button/Button.tsx";
 
 type Props = {
   crop: CropType;
@@ -35,20 +35,18 @@ const Crop = ({
         <td>{formatDate(crop.seededAt)}</td>
         <td>{formatDate(crop.harvestedAt)}</td>
         <td>
-          <button
+          <Button
+            variant="button-secondary"
+            text="Edit"
             onClick={() => handleEditCrop(crop.id)}
-            id={`${buttonStyleId.secondary}`}
-          >
-            Edit
-          </button>
+          />
         </td>
         <td>
-          <button
+          <Button
+            variant="button-secondary"
+            text="Delete"
             onClick={() => handleDeleteCrop(crop.id)}
-            id={`${buttonStyleId.secondary}`}
-          >
-            Delete
-          </button>
+          />
         </td>
       </tr>
     </>

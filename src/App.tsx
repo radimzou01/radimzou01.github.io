@@ -163,3 +163,9 @@ export default App;
 // cancel button do Add componenty
 // udělat komponenty pro buttony
 // validace na form
+
+// ---
+// core/components/button.css
+// css z id na classy
+// css file per componenta
+// css propsa do componenty = className ... "variant"

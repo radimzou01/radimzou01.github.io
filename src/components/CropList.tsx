@@ -1,5 +1,5 @@
 import Crop from "./Crop.tsx";
-import AddCropButton from "./AddCropButton.js";
+import Button from "./Button/Button.tsx";
 import { CropsType } from "../types.ts";
 
 type Props = {
@@ -19,7 +19,11 @@ const CropList = ({
 }: Props) => {
   return (
     <>
-      <AddCropButton onClick={onHandleShowAddScreen} />
+      <Button
+        variant="button-primary"
+        text="Add Crop"
+        onClick={onHandleShowAddScreen}
+      />
       <table>
         <thead>
           <tr>

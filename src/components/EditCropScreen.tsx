@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import DatePicker from "react-datepicker";
 import { CropType, DatepickerType } from "../types.ts";
-import { buttonStyleId } from "../constants/cssId";
+import Button from "./Button/Button.tsx";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -83,15 +82,12 @@ const EditCropScreen = ({
           onChange={handleHarvestDate}
           dateFormat="d.M.yyyy"
         />
-        <button type="submit" id={`${buttonStyleId.primary}`}>
-          Save
-        </button>
-        <button
+        <Button variant="button-primary" text="Save" type="submit" />
+        <Button
+          variant="button-secondary"
+          text="Cancel"
           onClick={onHandleShowEditScreen}
-          id={`${buttonStyleId.secondary}`}
-        >
-          Cancel
-        </button>
+        />
       </form>
     </>
   );
