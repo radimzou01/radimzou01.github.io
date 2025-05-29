@@ -1,7 +1,7 @@
 import moment from "moment";
-import { DatepickerType } from "../App";
+// import { DatepickerType } from "../App";
 
-const formatDate = (date: DatepickerType): string => {
+const formatDate = (date: any): string => {
   return moment(date).format("D.M.YYYY");
 };
 
