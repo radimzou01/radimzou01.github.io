@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button/Button.tsx";
 
 type Props = {
   onAddCrop: (itemName: string) => void;
@@ -29,7 +30,7 @@ const AddCropScreen = ({ onAddCrop }: Props) => {
             />
           </label>
         </p>
-        <button type="submit">Add</button>
+        <Button variant="button-primary" text="Add" type="submit" />
       </form>
     </>
   );

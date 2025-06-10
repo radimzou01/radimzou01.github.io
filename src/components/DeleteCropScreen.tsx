@@ -1,4 +1,5 @@
 import { CropType } from "../types.ts";
+import Button from "./Button/Button.tsx";
 
 type Props = {
   crop: CropType;
@@ -15,8 +16,16 @@ const DeleteCropScreen = ({
     <>
       <h3>Delete crop</h3>
       <p>Do you really want to delete this crop item?</p>
-      <button onClick={() => onDeleteCrop(crop.id)}>Delete</button>
-      <button onClick={onHandleShowInhabitedScreen}>Cancel</button>
+      <Button
+        variant="button-delete"
+        text="Delete"
+        onClick={() => onDeleteCrop(crop.id)}
+      />
+      <Button
+        variant="button-secondary"
+        text="Cancel"
+        onClick={onHandleShowInhabitedScreen}
+      />
     </>
   );
 };

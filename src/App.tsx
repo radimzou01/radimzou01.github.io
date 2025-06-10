@@ -63,6 +63,7 @@ const App = () => {
 
     setCrops(tempItems);
 
+    // TODO: KONZULTACE
     if (Object.keys(crops).length === 1) {
       handleShowEmptyScreen();
     } else {
@@ -141,14 +142,7 @@ const App = () => {
 
 export default App;
 
-// ===== 25.4.
-// Typescript
-// CSS flexbox
-
-// ----
-
 // moment - práce s datumem - odčítání, formátování datumu, času
-
 // ---
 // přidat select box - předvýběr typu plodiny
 // -- dle typu plodiny se přičte i předpokládaný datum sklizně
@@ -164,3 +158,14 @@ export default App;
 // align items
 
 // grid
+
+//---
+// cancel button do Add componenty
+// udělat komponenty pro buttony
+// validace na form
+
+// ---
+// core/components/button.css
+// css z id na classy
+// css file per componenta
+// css propsa do componenty = className ... "variant"

@@ -1,4 +1,4 @@
-import AddCropButton from "./AddCropButton.js";
+import Button from "./Button/Button.tsx";
 
 type Props = {
   onHandleShowAddScreen: () => void;
@@ -7,7 +7,11 @@ type Props = {
 const EmptyScreen = ({ onHandleShowAddScreen }: Props) => {
   return (
     <>
-      <AddCropButton onClick={onHandleShowAddScreen} />
+      <Button
+        variant="button-primary"
+        text="Add Crop"
+        onClick={onHandleShowAddScreen}
+      />
       <p>Just add some crop, plantery-bro!</p>
     </>
   );
